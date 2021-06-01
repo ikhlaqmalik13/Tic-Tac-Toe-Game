@@ -2,6 +2,7 @@ package com.inkquoir.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -132,15 +133,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void clearAllMoves(){
 
-        for(int i=0; i<3; i++){
-            for(int j=0; j<3; j++) {
-                buttons[i][j].setText("");
+        Thread timer = new Thread(){
+            public  void run(){
+                try{
+                    sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                finally {
+
+                    for(int i=0; i<3; i++){
+                        for(int j=0; j<3; j++) {
+                            buttons[i][j].setText("");
+                        }
+                    }
+
+                    moves = 0;
+                    player1Turn = true;
+                    
+                }
             }
-        }
+
+        };
+
+        timer.start();
 
 
-        moves = 0;
-        player1Turn = true;
+
+
 
     }
 
