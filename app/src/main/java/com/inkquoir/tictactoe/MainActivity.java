@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView playerFirstName, playerSecondName;
     private TextView scoreTextView, roundsTextView;
     private TextView winCount_O, winCount_X, drawCounts;
+    private ImageView refreshImageView;
 
     private boolean player1Turn = true;
     private int moves, rounds;
@@ -40,6 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
         selectNamesDialogue();
 
+        refreshImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                clearEveryData();
+            }
+        });
+
 
 
     }
@@ -51,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         playerFirstName = findViewById(R.id.playerFirstName);
         playerSecondName = findViewById(R.id.playerSecondName);
+
+        refreshImageView = findViewById(R.id.refreshImageView);
 
 
 
@@ -68,6 +80,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[i][j].setOnClickListener(this);
             }
         }
+
+
+    }
+
+    private void clearEveryData() {
+
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++) {
+                buttons[i][j].setText("");
+            }
+        }
+
+        moves = 0;
+        player1Turn = true;
+
+        scoreTextView.setText("0 : 0");
+        roundsTextView.setText("Rounds 0");
+
+        winCount_O.setText("0");
+        winCount_X.setText("0");
+        drawCounts.setText("0");
+
+
     }
 
     @Override

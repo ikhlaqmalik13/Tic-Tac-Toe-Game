@@ -329,6 +329,14 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/refreshImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_baseline_refresh_24" />
+
 
         </LinearLayout>
 
