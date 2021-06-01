@@ -44,6 +44,7 @@
                     android:background="@color/inkquoirPrimaryColor" />
 
                 <TextView
+                    android:id="@+id/playerFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="player 1"
@@ -100,6 +101,7 @@
                     android:background="@color/inkquoirPrimaryColor" />
 
                 <TextView
+                    android:id="@+id/playerSecondName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="player 2"

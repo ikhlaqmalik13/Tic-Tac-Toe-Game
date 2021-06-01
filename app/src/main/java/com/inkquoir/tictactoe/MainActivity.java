@@ -2,18 +2,27 @@ package com.inkquoir.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-//    Designed and developed By Ikhlaq Yousif Malik
+
+    /*
+      * Tic Tac Toe Game
+      * Developed by Ikhlaq Yousuf Malik on 01-june-2021
+     */
 
     private Button[][] buttons = new Button[3][3];
+    private TextView playerFirstName, playerSecondName;
     private TextView scoreTextView, roundsTextView;
     private TextView winCount_O, winCount_X, drawCounts;
 
@@ -29,12 +38,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         init();
+        selectNamesDialogue();
+
+
+
     }
 
     private void init() {
 
         scoreTextView = findViewById(R.id.scoreTextView);
         roundsTextView = findViewById(R.id.roundsTextView);
+
+        playerFirstName = findViewById(R.id.playerFirstName);
+        playerSecondName = findViewById(R.id.playerSecondName);
+
+
 
         winCount_O = findViewById(R.id.winCount_O);
         winCount_X = findViewById(R.id.winCount_X);
@@ -116,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void player1Wins() {
         Toast.makeText(getApplicationContext(), "Player 1 wins", Toast.LENGTH_SHORT).show();
+        showWinnersDialogue(playerFirstName.getText() + " wins !!!!");
         player1Score ++;
         rounds ++;
         updateScore();
@@ -124,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void player2Wins() {
         Toast.makeText(getApplicationContext(), "Player 2 wins", Toast.LENGTH_SHORT).show();
+        showWinnersDialogue(playerSecondName.getText() + " wins !!!!");
         player2Score ++;
         rounds ++;
         updateScore();
@@ -200,6 +220,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
 
     }
+
+    private void selectNamesDialogue()
+    {
+        Dialog dialogView = new Dialog(this);
+        dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogView.setContentView(R.layout.choose_names_for_game);
+        dialogView.setCancelable(false);
+        dialogView.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        EditText player1_name, player2_name;
+        Button submitNames;
+
+        player1_name = dialogView.findViewById(R.id.player1_name);
+        player2_name = dialogView.findViewById(R.id.player2_name);
+        submitNames = dialogView.findViewById(R.id.submitNames);
+
+
+        submitNames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                playerFirstName.setText(player1_name.getText());
+                playerSecondName.setText(player2_name.getText());
+
+                dialogView.cancel();
+
+            }
+        });
+
+        dialogView.show();
+
+
+
+    }
+
+    private void showWinnersDialogue(String textToSet){
+
+        Dialog dialogView = new Dialog(this);
+        dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogView.setContentView(R.layout.winner_dialogue);
+
+        dialogView.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        TextView winnersTextView = dialogView.findViewById(R.id.winnersTextView);
+        winnersTextView.setText(textToSet);
+
+        dialogView.show();
+
+    }
+
+
+
 
 
 
