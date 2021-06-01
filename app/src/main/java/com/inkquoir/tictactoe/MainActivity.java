@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+//    Designed and developed By Ikhlaq Yousif Malik
+
     private Button[][] buttons = new Button[3][3];
     private TextView scoreTextView, roundsTextView;
     private TextView winCount_O, winCount_X, drawCounts;
