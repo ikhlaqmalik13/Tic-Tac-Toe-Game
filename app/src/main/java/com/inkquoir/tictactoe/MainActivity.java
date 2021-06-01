@@ -1,20 +1,22 @@
 package com.inkquoir.tictactoe;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity implements PlayersName.PlayerNameListner, View.OnClickListener{
 
 //    Designed and developed By Ikhlaq Yousif Malik
 
     private Button[][] buttons = new Button[3][3];
     private TextView scoreTextView, roundsTextView;
-    private TextView winCount_O, winCount_X, drawCounts;
+    private TextView winCount_O, winCount_X, drawCounts, playerName1, playerName2;
 
     private boolean player1Turn = true;
     private int moves, rounds;
@@ -27,7 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // hides out the default action bar
+        getSupportActionBar().hide();
+
         init();
+        openDialog();
+    }
+
+    private void openDialog() {
+        PlayersName playersName = new PlayersName();
+        playersName.show(getSupportFragmentManager(), "Player Names");
     }
 
     private void init() {
@@ -38,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         winCount_O = findViewById(R.id.winCount_O);
         winCount_X = findViewById(R.id.winCount_X);
         drawCounts = findViewById(R.id.drawCounts);
+        playerName1 = findViewById(R.id.playerName1);
+        playerName2 = findViewById(R.id.playerName2);
 
 
         for(int i=0; i<3; i++){
@@ -59,8 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(player1Turn){
             ((Button) view).setText("0");
+            ((Button) view).setBackgroundColor(Color.GREEN);
         }else{
             ((Button) view).setText("X");
+            ((Button) view).setBackgroundColor(Color.RED);
         }
 
         moves ++;
@@ -118,7 +133,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player1Score ++;
         rounds ++;
         updateScore();
-        clearAllMoves();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                clearAllMoves();
+            }
+        },2000);
     }
 
     private void player2Wins() {
@@ -126,15 +146,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player2Score ++;
         rounds ++;
         updateScore();
-        clearAllMoves();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                clearAllMoves();
+            }
+        },2000);
 
-    }
+}
 
     private void clearAllMoves(){
 
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++) {
                 buttons[i][j].setText("");
+                buttons[i][j].setBackgroundColor(Color.WHITE);
             }
         }
 
@@ -181,10 +207,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-
-
-
-
-
+    @Override
+    public void applyTexts(String player1, String player2) {
+        playerName1.setText(player1);
+        playerName2.setText(player2);
+    }
 }
